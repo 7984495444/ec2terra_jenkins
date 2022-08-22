@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/7984495444/ec2terra_jenkins/new/main.git']]])
+                #checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/7984495444/ec2terra_jenkins/new.git']]])
             }
         }
         stage ("Terraform init") {
