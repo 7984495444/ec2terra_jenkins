@@ -1,24 +1,18 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('checkout') {
-            steps {
-                #checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/7984495444/ec2terra_jenkins.git']]])
-            }
-        }
-        stage ("Terraform init") {
-            steps {
-                sh ("terraform init");
+    agent any 
+        stages{
+            stage('Run quality checks'){
+                when {
+                    branch 'main' 
+                }
+              steps {
+                    sh '/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin/sonar-scanner \
+  -Dsonar.projectKey=hirsonu \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://13.232.74.162:9000 \
+  -Dsonar.login=sqp_e54473f39e2be38a9da075440179d8e8d578156d
             }
         }
         
-        stage ("Terraform Action") {
-            steps {
-                echo "Terraform action is --> ${action}"
-                sh ("terraform ${action} --auto-approve");
-            }
-        }
     }
 }
-
